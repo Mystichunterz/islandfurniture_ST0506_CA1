@@ -49,6 +49,21 @@ app.get('/api/getAllFurniture', middleware.checkToken, function (req, res) {
         });
 });
 
+app.get('/api/getAllLastChanceFurniture', function (req, res) {
+        var sortField = req.query.sortField || 'name';
+    var sortOrder = req.query.sortOrder || 'ASC';
+    var categoryFilter = req.query.categoryFilter || null;
+
+    furniture.getAllLastChanceFurniture(sortField, sortOrder, categoryFilter)
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send("Failed to get all last chance furniture");
+        });
+});
+
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json({ extended: false });
 app.post('/api/addFurniture', upload.single('imgfile'), function (req, res) {

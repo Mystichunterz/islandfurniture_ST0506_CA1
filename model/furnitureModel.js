@@ -116,6 +116,65 @@ var furnitureDB = {
             });
         });
     },
+    getAllLastChanceFurniture: function (sortField = 'name', sortOrder = 'ASC', categoryFilter = null) {
+        return new Promise((resolve, reject) => {
+            var conn = db.getConnection();
+            conn.connect(function (err) {
+                if (err) {
+                    console.log(err);
+                    conn.end();
+                    return reject(err);
+                } else {
+                    var validSortFields = ['name', 'price'];
+                    var validSortOrders = ['ASC', 'DESC'];
+    
+                    sortField = validSortFields.includes(sortField.toLowerCase()) ? sortField : 'name';
+                    sortOrder = validSortOrders.includes(sortOrder.toUpperCase()) ? sortOrder : 'ASC';
+    
+                    var sql = 'SELECT i.ID as id, i.NAME as name, f.IMAGEURL as imageURL, i.SKU as sku, i.DESCRIPTION as description,'
+                    + ' i.TYPE as type, i._LENGTH as length, i.WIDTH as width, i.HEIGHT as height, i.CATEGORY as category,'
+                    + ' MIN(ic.RETAILPRICE) as price'
+                    + ' FROM itementity i'
+                    + ' JOIN furnitureentity f ON i.ID=f.ID'
+                    + ' LEFT JOIN item_countryentity ic ON i.ID=ic.ITEM_ID'
+                    + ' WHERE i.ISDELETED=FALSE';
+
+                    if (categoryFilter) {
+                        sql += ' AND i.CATEGORY = ' + conn.escape(categoryFilter);
+                    }
+
+                    sql += ` GROUP BY i.ID, i.NAME, f.IMAGEURL, i.SKU, i.DESCRIPTION, i.TYPE, i._LENGTH, i.WIDTH, i.HEIGHT, i.CATEGORY`;
+                    sql += ` ORDER BY ${conn.escapeId(sortField)} ${sortOrder}`;
+    
+                    conn.query(sql, function (err, result) {
+                        if (err) {
+                            conn.end();
+                            return reject(err);
+                        } else {
+                            var furList = [];
+                            for(var i = 0; i < result.length; i++) {
+                                var fur = new Furniture();
+                                fur.id = result[i].id;
+                                fur.name = result[i].name;
+                                fur.imageURL = result[i].imageURL;
+                                fur.sku = result[i].sku;
+                                fur.description = result[i].description;
+                                fur.type = result[i].type;
+                                fur.length = result[i].length;
+                                fur.width = result[i].width;
+                                fur.height = result[i].height;
+                                fur.category = result[i].category;
+                                fur.price = result[i].price; // Add this line if price is a field
+                                furList.push(fur);
+                            }
+                            conn.end();
+                            return resolve(furList);
+                        }
+                    });
+                }
+            });
+        });
+    },    
     getFurnitureBySku: function (countryId, sku) {
         return new Promise( ( resolve, reject ) => {
             var conn = db.getConnection();
