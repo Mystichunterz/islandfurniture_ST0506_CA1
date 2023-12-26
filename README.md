@@ -30,3 +30,16 @@ To configure your local database settings for the IslandFurniture project, follo
     password: "your_password",
     database: "islandfurniture-it07"
 ```
+
+## 🚀 Commit/Branch Etiquette
+
+Feature Branches (feature/\*):
+
+- Commit changes that are directly related to the feature you're working on.
+- Regularly push your commits to remote branches so teammates can see your progress.
+  Develop Branch (dev):
+- Only merge feature branches that are completed and tested.
+- Ensure that merging your branch does not break the build.
+  Main Branch (main):
+- Never commit directly to the main branch.
+- Commits to main should only come from approved merges of release or hotfix branches.
