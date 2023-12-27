@@ -106,6 +106,9 @@ document.write('\
                     <li>\
                     <a href="/B/' + countryPrefix + '/lastChance.html">Last Chance</a>\
                     </li>\
+                    <li>\
+                    <a href="/B/' + countryPrefix + '/best2products.html">best2products</a>\
+                    </li>\
                 </ul>\
             </nav>\
         </div>\
