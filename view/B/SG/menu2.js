@@ -107,7 +107,7 @@ document.write('\
                     <a href="/B/' + countryPrefix + '/lastChance.html">Last Chance</a>\
                     </li>\
                     <li>\
-                    <a href="/B/' + countryPrefix + '/best2products.html">best2products</a>\
+                    <a href="/B/' + countryPrefix + '/best2products.html">Offers & Promotions</a>\
                     </li>\
                 </ul>\
             </nav>\
