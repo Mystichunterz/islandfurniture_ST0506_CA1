@@ -15,7 +15,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-            text-align: center;
+
         }
 
         #product-container {
@@ -35,6 +35,7 @@
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
+            text-align: center;
         }
 
         .product img {
@@ -221,7 +222,7 @@
                             </ul>
                         </li>
                         <li> <a href="/B/SG/lastChance.html">Last Chance</a> </li>
-                        <li> <a href="/B/SG/best2products">Offers & Promotions</a> </li>
+                        <li> <a href="/B/SG/best2products.html">Offers & Promotions</a> </li>
                     </ul>
                 </nav>
             </div>
@@ -237,49 +238,49 @@
             </div>
         </div>
     </section>
+    <div id="product-container">
+        <!-- Product 1 -->
+        <div class="product">
+            <img src="/img/products/F_TD_08.jpg" alt="Product 3 Image">
+            <h2>Product 3</h2>
+            <p>Description of Product 3</p>
+            <button id="promotion-btn"
+                onclick="openModal('Product 3', 'Description of Product 3', '120cm x 80cm', '/img/products/F_TD_08.jpg')">More
+                Info</button>
+        </div>
 
-    <!-- Product 1 -->
-    <div class="product">
-        <img src="/img/products/F_TD_08.jpg" alt="Product 3 Image">
-        <h2>Product 3</h2>
-        <p>Description of Product 3</p>
-        <button id="promotion-btn"
-            onclick="openModal('Product 3', 'Description of Product 3', '120cm x 80cm', '/img/products/F_TD_08.jpg')">More
-            Info</button>
-    </div>
+        <!-- Product 2 -->
+        <div class="product">
+            <img src="/img/products/F_TD_09.jpg" alt="Product 4 Image">
+            <h2>Product 4</h2>
+            <p>Description of Product 4</p>
+            <button id="promotion-btn"
+                onclick="openModal('Product 4', 'Description of Product 4', '90cm x 60cm', '/img/products/F_TD_09.jpg')">More
+                Info</button>
+        </div>
 
-    <!-- Product 2 -->
-    <div class="product">
-        <img src="/img/products/F_TD_09.jpg" alt="Product 4 Image">
-        <h2>Product 4</h2>
-        <p>Description of Product 4</p>
-        <button id="promotion-btn"
-            onclick="openModal('Product 4', 'Description of Product 4', '90cm x 60cm', '/img/products/F_TD_09.jpg')">More
-            Info</button>
-    </div>
-    </div>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div class="modal-content-wrapper">
-                <div class="modal-image">
-                    <img id="modalProductImage" src="" alt="Product Image">
-                </div>
-                <div class="modal-details">
-                    <h2 id="modalProductName"></h2>
-                    <p id="modalProductDescription"></p>
-                    <p id="Measurement"></p>
-                    <button onclick="addToCart(document.getElementById('modalProductName').innerText)">Add to
-                        Cart</button>
+        <!-- The Modal -->
+        <div id="myModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="modal-content-wrapper">
+                    <div class="modal-image">
+                        <img id="modalProductImage" src="" alt="Product Image">
+                    </div>
+                    <div class="modal-details">
+                        <h2 id="modalProductName"></h2>
+                        <p id="modalProductDescription"></p>
+                        <p id="Measurement"></p>
+                        <button onclick="addToCart(document.getElementById('modalProductName').innerText)">Add to
+                            Cart</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <button id="Next_promo" onclick="redirectToPromotion()">View Promotion</button>
     </div>
-
-    <button id="Next_promo" onclick="redirectToPromotion()">View Promotion</button>
-
 
 
     <script>
