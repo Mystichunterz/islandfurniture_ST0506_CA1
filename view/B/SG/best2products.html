@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="../checkCountry.js"></script>
+<script src="../../header.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+
+        }
+
+        #product-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 80%;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .product img {
+            width: 40%;
+            height: 40%;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        #promotion-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4446441b;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .logo {
+            display: flex;
+            text-align: left;
+            /* Align items vertically */
+        }
+
+
+        #Next_promo {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1dc41de4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-content img:hover {
+            transform: scale(1.2);
+        }
+
+        .modal-content-wrapper {
+            display: flex;
+        }
+
+        .modal-image {
+            flex: 1;
+            padding: 10px;
+        }
+
+        #modalProductImage {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .modal-details {
+            flex: 1;
+            padding: 10px;
+        }
+
+        #modalProductName {
+            margin-bottom: 10px;
+        }
+
+        #modalProductDescription {
+            margin-bottom: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .modal-image:hover #modalProductImage {
+            transform: scale(1.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        footer {
+
+            text-align: left;
+            /* Align text to the left */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <div class="container">
+            <h1 class="logo"> <a href="/B/SG/index.html"> <img alt="Island Furniture" width="180" height="80"
+                        data-sticky-width="82" data-sticky-height="40" src="../img/logo.png"> </a> </h1>
+            <!-- Non Logged In Menu-->
+            <div id="menuLoggedOut" style="display:block">
+                <nav>
+                    <ul class="nav nav-pills nav-top">
+                        <li class="storeLocationMenu"> <a href="/B/SG/storeLocation.html"><i
+                                    class="icon icon-map-marker"></i>Store Location</a> </li>
+                        <li> <a href="/B/SG/memberLogin.html"><i class="icon icon-unlock-alt"></i>Login/Register</a>
+                        </li>
+                        <li> <a href="/B/SG/contactUs.html"><i class="icon icon-shopping-cart"></i>Contact Us</a> </li>
+                    </ul> <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse"
+                        data-target=".nav-main-collapse"> <i class="icon icon-bars"></i> </button>
+                </nav>
+            </div> <!-- Logged In Menu-->
+            <div id="menuLoggedIn" style="display:none">
+                <nav>
+                    <ul class="nav nav-pills nav-top">
+                        <li><a id="memberName"></a></li>
+                        <li class="storeLocationMenu"> <a href="/B/SG/storeLocation.html"><i
+                                    class="icon icon-map-marker"></i>Store Location</a> </li>
+                        <li> <a href="/B/SG/shoppingCart.html"><i class="icon icon-shopping-cart"></i>Shopping Cart</a>
+                        </li>
+                        <li> <a href="/B/SG/memberProfile.html"><i class="icon icon-user"></i>Profile</a> </li>
+                        <li> <a href="/B/SG/contactUs.html"><i class="icon icon-shopping-cart"></i>Contact Us</a> </li>
+                        <li> <a href="#" onclick="logout()"><i class="icon icon-unlock-alt"></i>Logout</a> </li>
+                    </ul> <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse"
+                        data-target=".nav-main-collapse"> <i class="icon icon-bars"></i> </button>
+                </nav>
+            </div>
+        </div>
+        <div class="navbar-collapse nav-main-collapse collapse">
+            <div class="container">
+                <nav class="nav-main mega-menu">
+                    <ul class="nav nav-pills nav-main" id="mainMenu">
+                        <li> <a href="/B/SG/virtualStore.html">Virtual Store</a> </li>
+                        <li class="dropdown"> <a class="dropdown-toggle" href="#"> All Departments<i
+                                    class="icon icon-angle-down"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a id="tableDeskLink"
+                                        href="/B/SG/furnitureCategory.html?cat=Tables%20%26%20Desks"><i
+                                            class="icon icon-map-marker"></i> Tables &amp; Desk</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Bathroom"><i
+                                            class="icon icon-map-marker"></i>
+                                        Bathroom</a></li>
+                                <li><a id="bedMattressLink"
+                                        href="/B/SG/furnitureCategory.html?cat=Beds%20%26%20Mattresses"><i
+                                            class="icon icon-map-marker"></i> Beds &amp; Mattresses</a></li>
+                                <li><a id="sofaChairLink" href="/B/SG/furnitureCategory.html?cat=Sofas%20%26%20Chair"><i
+                                            class="icon icon-map-marker"></i> Sofas &amp; Chair</a></li>
+                                <li><a id="cabinetStorageLink"
+                                        href="/B/SG/furnitureCategory.html?cat=Cabinets%20%26%20Storage"><i
+                                            class="icon icon-map-marker"></i> Cabinets &amp; Storage</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Lightings"><i
+                                            class="icon icon-map-marker"></i> Lightings</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Study"><i
+                                            class="icon icon-map-marker"></i>
+                                        Study</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Children"><i
+                                            class="icon icon-map-marker"></i>
+                                        Children</a></li>
+                                <li><a id="retailProductLink"
+                                        href="/B/SG/retailProductsCategory.html?cat=All%20Retail%20Products"><i
+                                            class="icon icon-coffee"></i> Retail Products</a></li>
+                            </ul>
+                        </li>
+                        <li> <a href="/B/SG/lastChance.html">Last Chance</a> </li>
+                        <li> <a href="/B/SG/best2products.html">Offers & Promotions</a> </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Sales and Promotion</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="product-container">
+        <!-- Product 1 -->
+        <div class="product">
+            <img src="/img/products/F_TD_08.jpg" alt="Product 3 Image">
+            <h2>Product 3</h2>
+            <p>Description of Product 3</p>
+            <button id="promotion-btn"
+                onclick="openModal('Product 3', 'Description of Product 3', '120cm x 80cm', '/img/products/F_TD_08.jpg')">More
+                Info</button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product">
+            <img src="/img/products/F_TD_09.jpg" alt="Product 4 Image">
+            <h2>Product 4</h2>
+            <p>Description of Product 4</p>
+            <button id="promotion-btn"
+                onclick="openModal('Product 4', 'Description of Product 4', '90cm x 60cm', '/img/products/F_TD_09.jpg')">More
+                Info</button>
+        </div>
+
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="modal-content-wrapper">
+                    <div class="modal-image">
+                        <img id="modalProductImage" src="" alt="Product Image">
+                    </div>
+                    <div class="modal-details">
+                        <h2 id="modalProductName"></h2>
+                        <p id="modalProductDescription"></p>
+                        <p id="Measurement"></p>
+                        <button onclick="addToCart(document.getElementById('modalProductName').innerText)">Add to
+                            Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="Next_promo" onclick="redirectToPromotion()">View Promotion</button>
+    </div>
+
+
+    <script>
+        function openModal(name, description, measurement, imageSrc) {
+            document.getElementById("modalProductName").innerText = name;
+            document.getElementById("modalProductDescription").innerText = description;
+            document.getElementById("Measurement").innerText = `Measurement: ${measurement}`;
+            document.getElementById("modalProductImage").src = imageSrc;
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function addToCart(productName) {
+            alert('Added ' + productName + ' to cart!');
+            closeModal();
+        }
+
+        // Function to redirect to the promotion page
+        function redirectToPromotion() {
+            window.location.href = 'promotion.html';
+        }
+    </script>
+    </div>
+
+    <!-- <script src="../footer.js"></script> -->
+    <script src="../footer.js" id="footer-script"></script>
+
+
+
+</body>
+
+</html>

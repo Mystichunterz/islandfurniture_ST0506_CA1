@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="../checkCountry.js"></script>
+<script src="../../header.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Furniture Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+
+
+        .logo {
+            display: flex;
+            text-align: left;
+            /* Align items vertically */
+        }
+
+
+
+        .containers {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        #highlighted-products,
+        #product-list {
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            /* Take up full width */
+        }
+
+        #product-list .product {
+            width: calc(37.33% - 20px);
+            /* 20px margin on each side */
+            display: inline-block;
+        }
+
+        #highlighted-products {
+            text-align: center;
+            margin: 0 auto;
+            /* Center the container */
+            max-width: 1200px;
+            /* Set a max-width for better centering control */
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            /* Take up full width */
+        }
+
+        #highlighted-products h2 {
+            margin-bottom: 20px;
+        }
+
+        .product,
+        #highlighted-products .product {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            width: calc(30% - 20px);
+            /* 20px margin (10px on each side) */
+            text-align: center;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            display: inline-block;
+            /* Display as inline-block to have space between them */
+            vertical-align: top;
+            /* Align to the top to ensure proper vertical alignment */
+        }
+
+        .product h3,
+        #highlighted-products .product h3 {
+            font-size: 18px;
+            /* Adjust font size for product title */
+            margin-bottom: 10px;
+        }
+
+        .product p,
+        #highlighted-products .product p {
+            font-size: 14px;
+            /* Adjust font size for product description */
+            margin-bottom: 15px;
+        }
+
+        .product img,
+        #highlighted-products .product img {
+            width: 70%;
+            height: auto;
+            /* Allow height to adjust proportionally */
+            object-fit: contain;
+            /* Ensure the entire image fits without distortion */
+            margin-bottom: 15px;
+        }
+
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            /* Adjust the width as needed */
+            position: relative;
+            /* Enable positioning for the image zoom effect */
+        }
+
+        .modal-content img {
+            width: 100%;
+            /* Make the image fill the modal content */
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+            /* Add a smooth transition effect */
+        }
+
+        .modal-content img:hover {
+            transform: scale(1.2);
+            /* Zoom effect on hover */
+        }
+
+
+        .modal-content-wrapper {
+            display: flex;
+        }
+
+        .modal-image {
+            flex: 1;
+            padding: 10px;
+        }
+
+        #modalProductImage {
+            width: 100%;
+            /* Make the image fill the container */
+            height: auto;
+            object-fit: contain;
+        }
+
+        .modal-details {
+            flex: 1;
+            padding: 10px;
+        }
+
+        #modalProductName {
+            margin-bottom: 10px;
+        }
+
+        #modalProductDescription {
+            margin-bottom: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            margin-right: 10px;
+            /* Add some margin to the right side */
+        }
+
+        /* Add hover effect for the image */
+        .modal-image:hover #modalProductImage {
+            transform: scale(1.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        footer {
+
+            text-align: left;
+            /* Align text to the left */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <div class="container">
+            <h1 class="logo"> <a href="/B/SG/index.html"> <img alt="Island Furniture" width="180" height="80"
+                        data-sticky-width="82" data-sticky-height="40" src="../img/logo.png"> </a> </h1>
+            <!-- Non Logged In Menu-->
+            <div id="menuLoggedOut" style="display:block">
+                <nav>
+                    <ul class="nav nav-pills nav-top">
+                        <li class="storeLocationMenu"> <a href="/B/SG/storeLocation.html"><i
+                                    class="icon icon-map-marker"></i>Store Location</a> </li>
+                        <li> <a href="/B/SG/memberLogin.html"><i class="icon icon-unlock-alt"></i>Login/Register</a>
+                        </li>
+                        <li> <a href="/B/SG/contactUs.html"><i class="icon icon-shopping-cart"></i>Contact Us</a> </li>
+                    </ul> <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse"
+                        data-target=".nav-main-collapse"> <i class="icon icon-bars"></i> </button>
+                </nav>
+            </div> <!-- Logged In Menu-->
+            <div id="menuLoggedIn" style="display:none">
+                <nav>
+                    <ul class="nav nav-pills nav-top">
+                        <li><a id="memberName"></a></li>
+                        <li class="storeLocationMenu"> <a href="/B/SG/storeLocation.html"><i
+                                    class="icon icon-map-marker"></i>Store Location</a> </li>
+                        <li> <a href="/B/SG/shoppingCart.html"><i class="icon icon-shopping-cart"></i>Shopping Cart</a>
+                        </li>
+                        <li> <a href="/B/SG/memberProfile.html"><i class="icon icon-user"></i>Profile</a> </li>
+                        <li> <a href="/B/SG/contactUs.html"><i class="icon icon-shopping-cart"></i>Contact Us</a> </li>
+                        <li> <a href="#" onclick="logout()"><i class="icon icon-unlock-alt"></i>Logout</a> </li>
+                    </ul> <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse"
+                        data-target=".nav-main-collapse"> <i class="icon icon-bars"></i> </button>
+                </nav>
+            </div>
+        </div>
+        <div class="navbar-collapse nav-main-collapse collapse">
+            <div class="container">
+                <nav class="nav-main mega-menu">
+                    <ul class="nav nav-pills nav-main" id="mainMenu">
+                        <li> <a href="/B/SG/virtualStore.html">Virtual Store</a> </li>
+                        <li class="dropdown"> <a class="dropdown-toggle" href="#"> All Departments<i
+                                    class="icon icon-angle-down"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a id="tableDeskLink"
+                                        href="/B/SG/furnitureCategory.html?cat=Tables%20%26%20Desks"><i
+                                            class="icon icon-map-marker"></i> Tables &amp; Desk</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Bathroom"><i
+                                            class="icon icon-map-marker"></i>
+                                        Bathroom</a></li>
+                                <li><a id="bedMattressLink"
+                                        href="/B/SG/furnitureCategory.html?cat=Beds%20%26%20Mattresses"><i
+                                            class="icon icon-map-marker"></i> Beds &amp; Mattresses</a></li>
+                                <li><a id="sofaChairLink" href="/B/SG/furnitureCategory.html?cat=Sofas%20%26%20Chair"><i
+                                            class="icon icon-map-marker"></i> Sofas &amp; Chair</a></li>
+                                <li><a id="cabinetStorageLink"
+                                        href="/B/SG/furnitureCategory.html?cat=Cabinets%20%26%20Storage"><i
+                                            class="icon icon-map-marker"></i> Cabinets &amp; Storage</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Lightings"><i
+                                            class="icon icon-map-marker"></i> Lightings</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Study"><i
+                                            class="icon icon-map-marker"></i>
+                                        Study</a></li>
+                                <li><a href="/B/SG/furnitureCategory.html?cat=Children"><i
+                                            class="icon icon-map-marker"></i>
+                                        Children</a></li>
+                                <li><a id="retailProductLink"
+                                        href="/B/SG/retailProductsCategory.html?cat=All%20Retail%20Products"><i
+                                            class="icon icon-coffee"></i> Retail Products</a></li>
+                            </ul>
+                        </li>
+                        <li> <a href="/B/SG/lastChance.html">Last Chance</a> </li>
+                        <li> <a href="/B/SG/best2products.html">Offers & Promotions</a> </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Sales and Promotion</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="containers">
+        <div id="highlighted-products">
+            <h2>Highlighted Products</h2>
+
+        </div>
+
+
+        <div id="product-list">
+            <h2>All Products</h2>
+            <!-- Product items will be added here dynamically using JavaScript -->
+        </div>
+    </div>
+
+
+
+
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-content-wrapper">
+                <div class="modal-image">
+                    <!-- Image with zoom effect -->
+                    <img id="modalProductImage" alt="Product Image">
+                </div>
+                <div class="modal-details">
+                    <h2 id="modalProductName"></h2>
+                    <p id="modalProductDescription"></p>
+                    <p id="Measurement"></p>
+                    <!-- Add to Cart button in the modal -->
+                    <button onclick="addToCart(document.getElementById('modalProductName').innerText)">Add to
+                        Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        function displayHighlightedProducts() {
+            const highlightedProductsContainer = document.getElementById('highlighted-products');
+
+            ikeaHighlightedProducts.forEach(product => {
+                const productElement = createProductElement(product);
+                highlightedProductsContainer.appendChild(productElement);
+            });
+        }
+
+
+        // Function to display IKEA products in the all products section
+        function displayAllProducts() {
+            const productListContainer = document.getElementById('product-list');
+
+            ikeaProducts.forEach(product => {
+                const productElement = createProductElement(product);
+                productListContainer.appendChild(productElement);
+            });
+        }
+
+
+
+        function openModal(productName, productImage, measurement) {
+            const modal = document.getElementById('myModal');
+            const modalProductName = document.getElementById('modalProductName');
+            const modalProductDescription = document.getElementById('modalProductDescription');
+            const Measurement = document.getElementById('Measurement');
+            const modalProductImage = document.getElementById('modalProductImage');
+
+            // Set product information in the modal
+            modalProductName.innerText = productName;
+            modalProductDescription.innerText = `Description of ${productName}`;
+            Measurement.innerText = `Measurement: ${measurement}`;
+            modalProductImage.src = productImage;
+
+            // Display the modal
+            modal.style.display = 'block';
+        }
+
+
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+
+        // Function to add a product to the cart (just a placeholder for now)
+        function addToCart(productName) {
+            alert('Added ' + productName + ' to cart!');
+            closeModal(); // Close the modal after adding to cart
+        }
+
+        const ikeaHighlightedProducts = [
+            { name: 'Product 3', description: `Description of Product 3`, Image: '/img/products/F_TD_08.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 4', description: 'Description of Product 4', Image: '/img/products/F_TD_09.jpg', measurement: '90cm x 60cm  rerer' },
+            // Add more highlighted products as needed
+        ];
+
+        const ikeaProducts = [
+            { name: 'Product 3', description: `Description of Product 3`, Image: '/img/products/F_TD_08.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 4', description: 'Description of Product 4', Image: '/img/products/F_TD_09.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 5', description: 'Description of Product 5', Image: '/img/products/F_TD_08.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 6', description: 'Description of Product 6', Image: '/img/products/F_TD_04.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 7', description: 'Description of Product 7', Image: '/img/products/F_TD_05.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 8', description: 'Description of Product 8', Image: '/img/products/F_TD_06.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 9', description: 'Description of Product 9', Image: '/img/products/F_TD_07.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 10', description: 'Description of Product 10', Image: '/img/products/F_TD_08.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 11', description: 'Description of Product 11', Image: '/img/products/F_TD_09.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 12', description: 'Description of Product 12', Image: '/img/products/F_TD_10.jpg', measurement: '120cm x 80cm' },
+            { name: 'Product 12', description: 'Description of Product 12', Image: '/img/products/F_BA_11.jpg', measurement: '120cm x 80cm' },
+        ];
+
+        // Function to display IKEA products
+        function createProductElement(product) {
+            const productElement = document.createElement('div');
+            productElement.className = 'product';
+            productElement.innerHTML = `
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <img src="${product.Image}" alt="${product.name} Image">
+        <!-- Open the modal when the button is clicked -->
+        <button onclick="openModal('${product.name}', '${product.Image}', '${product.measurement}')">More Info</button>
+    `;
+            return productElement;
+        }
+
+        // Call the functions to display IKEA products
+        displayHighlightedProducts();
+        displayAllProducts();
+    </script>
+
+
+    <script src="../footer.js" id="footer-script"></script>
+</body>
+
+</html>
